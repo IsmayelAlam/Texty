@@ -1,23 +1,20 @@
 .authPage {
-  width: 100vw;
-  height: 100vh;
-  font-size: 1.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $color01;
+  height: 100vh;
 
   & .authBox {
     margin: 0 auto;
     background-color: $color05;
     width: fit-content;
-    padding: 0 5rem 3rem;
+    padding: 0 5rem 5rem;
     border-radius: 1rem;
     box-shadow: $md_shadow;
 
     & img {
       display: block;
-      margin: 0 auto 2rem;
+      margin: 0 auto;
       max-width: 20rem;
     }
 
@@ -92,7 +89,6 @@
 
   & .textLink {
     font-size: 1.35rem;
-    text-transform: capitalize;
     color: $gray0;
     &:not(:last-child) {
       margin-bottom: 1rem;

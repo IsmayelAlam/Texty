@@ -57,3 +57,11 @@ blockquote,
 q {
   quotes: none;
 }
+
+.main {
+  width: 100vw;
+  height: 100vh;
+  font-size: 1.6rem;
+  background-color: $color01;
+  overflow: hidden;
+}

@@ -1,6 +1,7 @@
 // utilities
-@import "./component/style/resetDefault.scss";
 @import "./component/style/variables.scss";
+@import "./component/style/resetDefault.scss";
 
 // pages
-@import "./component/style/pages.scss";
+@import "./component/style/authPages.scss";
+@import "./component/style/homepage.scss";

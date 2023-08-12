@@ -1,12 +1,15 @@
 import { FaFacebookSquare, FaGoogle, FaTwitter } from "react-icons/fa";
 
-export default function SignUp() {
+import Logo from "../utils/Logo";
+
+export default function Login() {
   return (
     <div className="authPage">
       <div className="authBox">
-        <img src="/logo.svg" alt="" />
+        <Logo />
+
         <div className="authLink">
-          <p>Sign up with</p>
+          <p>Login with</p>
           <div className="links">
             <FaGoogle />
             <FaFacebookSquare />
@@ -20,24 +23,22 @@ export default function SignUp() {
         </div>
         <form className="authFrom">
           <input type="text" id="username" placeholder="username" required />
-          <input type="email" id="email" placeholder="email" required />
+
           <input
             type="password"
             id="password"
             placeholder="password"
             required
           />
-          <input
-            type="password"
-            id="password"
-            placeholder="confirm password"
-            required
-          />
 
-          <button type="submit">sign up</button>
+          <button type="submit">login</button>
         </form>
         <p className="textLink">
-          already have an account? <a href="#">login</a>
+          Forget password? <a href="#">Recover</a>
+        </p>
+        <p className="textLink">
+          Create a new account
+          <a href="#"> &rarr;</a>
         </p>
       </div>
     </div>
