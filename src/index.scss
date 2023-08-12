@@ -1,0 +1,82 @@
+// colors
+$color_prim_l: #b1e1e9;
+$color_prim: #96d7eb;
+$color_prim_d: #839cb5;
+
+$color_sec_l: #bac8ff;
+$color_sec: #5c7cfa;
+$color_sec_d: #364fc7;
+
+$gray0: #f8f9fa;
+$gray1: #dee2e6;
+$gray2: #adb5bd;
+$gray3: #495057;
+$gray4: #212529;
+
+$black: #0f1011;
+$white: #e3effc;
+
+$sm_shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
+$md_shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+
+// pages
+@import "./component/style/pages.scss";
+
+// reset default
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+a,
+img,
+q,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+footer,
+header,
+nav,
+section,
+time {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+  font-size: 62.5%;
+  font-family: "Roboto", sans-serif;
+}
+/* HTML5 display-role reset for older browsers */
+aside,
+figcaption,
+footer,
+header,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}

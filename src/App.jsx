@@ -1,7 +1,9 @@
+import Login from "./component/pages/Login";
+
 function App() {
   return (
     <>
-      <img src="/texty.svg" alt="logo" />
+      <Login />
     </>
   );
 }
