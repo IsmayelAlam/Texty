@@ -5,11 +5,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $color_prim;
+  background-color: #e0fbfc;
 
   & .authBox {
     margin: 0 auto;
-    background: $color_sec;
+    background-color: #3d5a80;
     width: fit-content;
     padding: 0 5rem 3rem;
     border-radius: 1rem;
@@ -19,6 +19,40 @@
       display: block;
       margin: 0 auto 2rem;
       max-width: 20rem;
+    }
+
+    & .authLink {
+      & p {
+        text-align: center;
+        font-size: 1.8rem;
+        color: $gray0;
+      }
+
+      & .links {
+        display: flex;
+        justify-content: space-evenly;
+        margin: 2rem 0 1rem;
+
+        & svg {
+          cursor: pointer;
+          height: 2.4rem;
+          width: 2.4rem;
+          color: #e0fbfc;
+        }
+      }
+    }
+
+    & .divider {
+      display: flex;
+      margin: 1rem 0 2rem;
+      & p {
+        margin: 0 1rem;
+        font-size: 1.8rem;
+        color: $gray0;
+      }
+      & hr {
+        width: 100%;
+      }
     }
 
     & .authFrom {
@@ -34,21 +68,22 @@
         padding: 0.5rem 1rem;
         background-color: transparent;
         border-bottom: 0.25rem solid $color_prim_l;
+        color: $gray0;
 
         &::placeholder {
-          color: $gray1;
+          color: $gray2;
           text-transform: capitalize;
         }
       }
       & button {
         padding: 1rem;
-        margin: 2rem 0;
+        margin: 0 0 3rem;
         border-radius: 50rem;
         border: none;
         outline: none;
         box-shadow: $sm_shadow;
         background-color: $color_prim_l;
-        color: $gray3;
+        color: $gray1;
         font-size: 1.8rem;
         font-weight: 600;
         text-transform: capitalize;
@@ -56,6 +91,7 @@
       }
     }
   }
+
   & .textLink {
     font-size: 1.35rem;
     text-transform: capitalize;
