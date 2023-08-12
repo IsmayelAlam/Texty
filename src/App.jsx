@@ -1,6 +1,6 @@
-import Homepage from "./component/pages/Homepage";
-import Login from "./component/pages/Login";
-import SignUp from "./component/pages/SignUp";
+import Homepage from "./components/pages/Homepage";
+import Login from "./components/pages/Login";
+import SignUp from "./components/pages/SignUp";
 
 function App() {
   return (

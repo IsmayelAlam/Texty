@@ -1,7 +1,5 @@
 export default function SearchBar() {
   return (
-    <div>
-      <input type="text" />
-    </div>
+    <input type="text" className="search" placeholder="Search for friends" />
   );
 }

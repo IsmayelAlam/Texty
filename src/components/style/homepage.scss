@@ -14,25 +14,144 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: $color05;
+    border-right: 2px solid $color04;
 
-    & img {
+    & .logo {
       max-width: 20rem;
+      margin: -1rem 0;
+    }
+
+    & .search {
+      width: 80%;
+      border: none;
+      background-color: transparent;
+      border-bottom: 1px solid $color04;
+      padding: 0.5rem;
+      font-size: 1.8rem;
+      outline: none;
+      color: $gray0;
+
+      &::placeholder {
+        color: $gray2;
+      }
     }
 
     & .messageList {
-      flex-grow: 1;
-      background-color: $gray1;
+      flex: 1;
+      width: 90%;
+      margin: 1rem auto;
+      padding: 0.5rem 0;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      border: 2px solid $color04;
+      border-radius: 1rem;
+
+      &::-webkit-scrollbar {
+        appearance: none;
+        display: none;
+      }
+
+      & .friend.active {
+        background: $gray4;
+      }
+
+      & .friend {
+        height: 7rem;
+        width: 95%;
+        padding: 1rem 0.5rem;
+        margin: 0.5rem auto;
+        border: 2px solid $color04;
+        border-radius: 1rem;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 1.7rem;
+        cursor: pointer;
+
+        & .friendImg {
+          max-height: 5rem;
+          max-width: 5rem;
+          border-radius: 20rem;
+        }
+        & .friendName {
+          max-width: 60%;
+          flex: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          text-transform: capitalize;
+
+          & .lastMessage {
+            font-size: 1.2rem;
+            color: $gray2;
+            margin-top: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+        & .new {
+          background-color: $color04;
+          padding: 0.5rem 1rem;
+          font-size: 1.2rem;
+          border-radius: 2rem;
+        }
+
+        &:hover {
+          background-color: $color01;
+        }
+      }
     }
 
     & .user {
       height: 7rem;
-      width: 100%;
-      background-color: $color01;
+      width: 90%;
+      padding: 1rem 0.5rem;
+      margin-bottom: 1rem;
+      border: 2px solid $color04;
+      border-radius: 1rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.7rem;
+
+      & .userImg {
+        max-height: 5rem;
+        max-width: 5rem;
+        border-radius: 20rem;
+      }
+
+      & .username {
+        max-width: 40%;
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-transform: capitalize;
+      }
+
+      & .contactIcon {
+        height: 2.5rem;
+        width: 2.5rem;
+        cursor: pointer;
+      }
+      & .logout {
+        background-color: $color04;
+        color: $gray0;
+        padding: 0.5rem 2rem;
+        border: none;
+        border-radius: 10rem;
+        outline: none;
+        cursor: pointer;
+      }
     }
   }
 
   & .chat {
     width: 75%;
-    background: #887ead;
+    background: $color05;
   }
 }
