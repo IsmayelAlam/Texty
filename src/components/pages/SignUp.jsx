@@ -7,6 +7,7 @@ import { ImImages } from "react-icons/im";
 
 import Logo from "../utils/Logo";
 import { auth, db, storage } from "../API/firebase";
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
   async function handleSingUp(e) {
@@ -109,7 +110,7 @@ export default function SignUp() {
           <button type="submit">sign up</button>
         </form>
         <p className="textLink">
-          Already have an account? <a href="#">Login</a>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>
