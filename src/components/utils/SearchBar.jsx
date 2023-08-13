@@ -1,5 +1,10 @@
+import { FaSearch } from "react-icons/fa";
+
 export default function SearchBar() {
   return (
-    <input type="text" className="search" placeholder="Search for friends" />
+    <div className="search">
+      <input type="text" placeholder="Search for friends" />
+      <FaSearch />
+    </div>
   );
 }

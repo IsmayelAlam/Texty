@@ -22,13 +22,14 @@ export default function Login() {
           <hr />
         </div>
         <form className="authFrom">
-          <input type="text" id="username" placeholder="username" required />
+          <input type="email" id="email" placeholder="Email" required />
 
           <input
             type="password"
             id="password"
-            placeholder="password"
+            placeholder="Password"
             required
+            minLength={6}
           />
 
           <button type="submit">login</button>

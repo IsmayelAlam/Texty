@@ -26,8 +26,19 @@
       width: 80%;
       border-bottom: $sm_border;
       padding: 0.5rem;
-      font-size: 1.8rem;
-      color: $gray0;
+      display: flex;
+      align-items: center;
+
+      & input {
+        font-size: 1.8rem;
+        color: $gray0;
+        flex: 1;
+      }
+      & svg {
+        color: $color04;
+        width: 2rem;
+        height: 2rem;
+      }
 
       &::placeholder {
         color: $gray2;

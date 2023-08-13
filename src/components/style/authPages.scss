@@ -67,9 +67,35 @@
 
         &::placeholder {
           color: $gray2;
-          text-transform: capitalize;
+        }
+
+        &:focus {
+          border-bottom: 0.25rem solid $color04;
+        }
+        &:valid {
+          border-bottom: 0.25rem solid greenyellow;
         }
       }
+
+      & .addImage {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: $gray1;
+        margin: 1rem 0;
+        cursor: pointer;
+
+        & svg {
+          color: $color04;
+          width: 2.4rem;
+          height: 2.4rem;
+        }
+
+        & input {
+          display: none;
+        }
+      }
+
       & button {
         padding: 1rem;
         margin: 0 0 3rem;
