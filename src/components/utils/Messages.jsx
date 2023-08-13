@@ -1,6 +1,6 @@
 export default function Messages({ name }) {
   return (
-    <div className="friend">
+    <div className={`friend  ${name === "jessy" && "active"}`}>
       <img
         src={`https://picsum.photos/id/${Math.ceil(Math.random() * 1000)}/200`}
         alt=""
@@ -11,7 +11,7 @@ export default function Messages({ name }) {
         <p className="lastMessage">hello</p>
       </div>
 
-      <p className="new">new</p>
+      {name === "jhon" && <p className="new">new</p>}
     </div>
   );
 }

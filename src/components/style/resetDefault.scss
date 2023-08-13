@@ -65,3 +65,11 @@ q {
   background-color: $color01;
   overflow: hidden;
 }
+
+button,
+input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
