@@ -8,12 +8,18 @@ import { ImImages } from "react-icons/im";
 import Logo from "../utils/Logo";
 import { auth, db, storage } from "../API/firebase";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Spinner from "../utils/Spinner";
+import ErrorMessage from "../utils/ErrorMessage";
 
 export default function SignUp() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState("");
   const navigate = useNavigate();
 
   async function handleSingUp(e) {
     e.preventDefault();
+    setIsLoading(true);
 
     const fullName = e.target[0].value;
     const email = e.target[1].value;
@@ -21,13 +27,13 @@ export default function SignUp() {
     const confirmPass = e.target[3].value;
     const image = e.target[4].files[0];
 
-    if (password !== confirmPass) {
-      e.target[3].value = "";
-      return;
-    }
-
     try {
+      if (password !== confirmPass) {
+        throw new Error("password dose not match");
+      }
+
       const res = await createUserWithEmailAndPassword(auth, email, password);
+
       await updateProfile(res.user, {
         displayName: fullName,
       });
@@ -36,8 +42,6 @@ export default function SignUp() {
         const storageRef = ref(storage, `${fullName}.jpg`);
 
         const uploadTask = uploadBytesResumable(storageRef, image);
-
-        console.log(uploadTask);
 
         uploadTask.on(
           "state_changed",
@@ -55,7 +59,7 @@ export default function SignUp() {
             }
           },
           (error) => {
-            console.log(error);
+            setIsError(error);
           },
           async () => {
             const download = await getDownloadURL(uploadTask.snapshot.ref);
@@ -81,66 +85,75 @@ export default function SignUp() {
           friends: {},
         });
       }
-
-      console.log(res);
+      setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      setIsError(error);
+      return;
     }
 
     e.target.reset();
-    navigate("/");
+    if (!isError && !isLoading) navigate("/");
   }
+
+  let content = (
+    <>
+      <div className="authLink">
+        <p>Sign up with</p>
+        <div className="links">
+          <FaGoogle />
+          <FaFacebookSquare />
+          <FaTwitter />
+        </div>
+      </div>
+      <div className="divider">
+        <hr />
+        <p>or</p>
+        <hr />
+      </div>
+      <form className="authFrom" onSubmit={handleSingUp}>
+        <input
+          type="text"
+          id="fullName"
+          placeholder="Full Name"
+          required
+          minLength={4}
+        />
+        <input type="email" id="email" placeholder="Email" required />
+        <input
+          type="password"
+          id="password"
+          placeholder="Password"
+          minLength={6}
+          required
+        />
+        <input
+          type="password"
+          id="confirmPassword"
+          placeholder="Confirm password"
+          minLength={6}
+          required
+        />
+        <label htmlFor="images" className="addImage">
+          <ImImages /> <span>Add a profile image</span>
+          <input type="file" id="images" />
+        </label>
+
+        <button type="submit">sign up</button>
+      </form>
+      <p className="textLink">
+        Already have an account? <Link to="/login">Login</Link>
+      </p>
+    </>
+  );
+
+  if (isLoading) content = <Spinner />;
+  if (isError) content = <ErrorMessage error={isError} />;
 
   return (
     <div className="authPage">
       <div className="authBox">
         <Logo />
-        <div className="authLink">
-          <p>Sign up with</p>
-          <div className="links">
-            <FaGoogle />
-            <FaFacebookSquare />
-            <FaTwitter />
-          </div>
-        </div>
-        <div className="divider">
-          <hr />
-          <p>or</p>
-          <hr />
-        </div>
-        <form className="authFrom" onSubmit={handleSingUp}>
-          <input
-            type="text"
-            id="fullName"
-            placeholder="Full Name"
-            required
-            minLength={4}
-          />
-          <input type="email" id="email" placeholder="Email" required />
-          <input
-            type="password"
-            id="password"
-            placeholder="Password"
-            minLength={6}
-            required
-          />
-          <input
-            type="password"
-            id="confirmPassword"
-            placeholder="Confirm password"
-            minLength={6}
-            required
-          />
-          <label htmlFor="images" className="addImage">
-            <ImImages /> <span>Add a profile image</span>
-            <input type="file" id="images" />
-          </label>
-
-          <button type="submit">sign up</button>
-        </form>
-        <p className="textLink">
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
+        {content}
       </div>
     </div>
   );

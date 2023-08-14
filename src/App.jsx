@@ -16,8 +16,14 @@ function App() {
             index
             element={currentUser ? <Homepage /> : <Navigate to="login" />}
           />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<SignUp />} />
+          <Route
+            path="login"
+            element={!currentUser ? <Login /> : <Navigate to="/" />}
+          />
+          <Route
+            path="signup"
+            element={!currentUser ? <SignUp /> : <Navigate to="/" />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
