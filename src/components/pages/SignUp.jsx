@@ -10,6 +10,7 @@ import { useReducer } from "react";
 import Spinner from "../utils/Spinner";
 import ErrorMessage from "../utils/ErrorMessage";
 import Logo from "../utils/Logo";
+import { imageCompress } from "../../helpers/imageCompress";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -48,10 +49,12 @@ export default function SignUp() {
     const image = e.target.files["0"];
     dispatch({ type: "isUploading", uploading: true });
 
+    const compressImg = await imageCompress(image);
+
     if (image) {
       const storageRef = ref(storage, `${state.fullName}${Date.now()}`);
 
-      const uploadTask = uploadBytesResumable(storageRef, image);
+      const uploadTask = uploadBytesResumable(storageRef, compressImg);
 
       uploadTask.on(
         "state_changed",

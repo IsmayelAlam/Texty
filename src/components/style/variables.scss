@@ -16,3 +16,24 @@ $md_shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
 
 $sm_border: 1px solid $color04;
 $md_border: 2px solid $color04;
+
+@mixin mobile {
+  @media screen and (max-width: 480px) {
+    @content;
+  }
+}
+@mixin table {
+  @media screen and (max-width: 780px) {
+    @content;
+  }
+}
+@mixin laptop {
+  @media screen and (max-width: 1250px) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media screen and (max-width: 1920px) {
+    @content;
+  }
+}

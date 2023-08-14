@@ -4,6 +4,10 @@
   justify-content: center;
   height: 100vh;
 
+  @include laptop {
+    background-color: $color05;
+  }
+
   & .authBox {
     margin: 0 auto;
     background-color: $color05;
@@ -11,6 +15,10 @@
     padding: 0 5rem 5rem;
     border-radius: 1rem;
     box-shadow: $md_shadow;
+
+    @include laptop {
+      box-shadow: none;
+    }
 
     & .logo {
       display: block;
