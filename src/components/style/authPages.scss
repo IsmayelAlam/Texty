@@ -90,6 +90,15 @@
           width: 2.4rem;
           height: 2.4rem;
         }
+        & progress {
+          width: 12.5rem;
+          border-radius: 5rem;
+          overflow: hidden;
+          -webkit-appearance: none;
+        }
+        ::-webkit-progress-bar {
+          background-color: $color04;
+        }
 
         & input {
           display: none;

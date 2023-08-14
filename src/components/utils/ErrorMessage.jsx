@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { BiArrowBack, BiError } from "react-icons/bi";
 
-export default function ErrorMessage({ error, page = "/" }) {
+export default function ErrorMessage({ error }) {
   const navigate = useNavigate();
   const message = error.message.includes("email-already-in-use")
     ? "Email is already registered, please try a different one"
@@ -11,7 +11,7 @@ export default function ErrorMessage({ error, page = "/" }) {
     <div className="error">
       <BiError />
       <p>{message}</p>
-      <button onClick={() => navigate(page)}>
+      <button onClick={() => navigate(-1)}>
         <BiArrowBack />
       </button>
     </div>

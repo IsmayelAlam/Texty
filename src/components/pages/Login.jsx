@@ -22,7 +22,7 @@ export default function Login() {
     const password = e.target[1].value;
 
     try {
-      const res = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
     } catch (error) {
       setIsError(error);
