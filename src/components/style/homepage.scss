@@ -38,6 +38,7 @@
         color: $color04;
         width: 2rem;
         height: 2rem;
+        cursor: pointer;
       }
 
       &::placeholder {
@@ -128,9 +129,10 @@
       font-size: 1.7rem;
 
       & .userImg {
-        max-height: 5rem;
-        max-width: 5rem;
+        height: 5rem;
+        width: 5rem;
         border-radius: 20rem;
+        object-fit: cover;
       }
 
       & .username {

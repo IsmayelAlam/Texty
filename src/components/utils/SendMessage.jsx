@@ -14,11 +14,7 @@ export default function SendMessage() {
         <label htmlFor="images">
           <ImImages />
         </label>
-        <label htmlFor="docs">
-          <ImAttachment />
-        </label>
         <input type="file" id="images" />
-        <input type="file" id="docs" />
 
         <button type="submit" className="sendBtn">
           <AiOutlineSend />

@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 
 import { FaFacebookSquare, FaGoogle, FaTwitter } from "react-icons/fa";
@@ -7,20 +7,19 @@ import { ImImages } from "react-icons/im";
 
 import Logo from "../utils/Logo";
 import { auth, db, storage } from "../API/firebase";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
   async function handleSingUp(e) {
     e.preventDefault();
-    console.log(e);
 
     const fullName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
     const confirmPass = e.target[3].value;
     const image = e.target[4].files[0];
-
-    console.log(image);
 
     if (password !== confirmPass) {
       e.target[3].value = "";
@@ -29,37 +28,67 @@ export default function SignUp() {
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(res.user, {
+        displayName: fullName,
+      });
 
-      const storageRef = ref(storage, fullName);
+      if (image) {
+        const storageRef = ref(storage, `${fullName}.jpg`);
 
-      const uploadTask = uploadBytesResumable(storageRef, image);
+        const uploadTask = uploadBytesResumable(storageRef, image);
 
-      uploadTask.on(
-        (error) => {},
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+        console.log(uploadTask);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {
+            console.log(error);
+          },
+          async () => {
+            const download = await getDownloadURL(uploadTask.snapshot.ref);
+
             await updateProfile(res.user, {
-              displayName: fullName,
-              photoURL: downloadURL,
+              photoURL: download,
             });
             await setDoc(doc(db, "users", res.user.uid), {
               uid: res.user.uid,
-              fullName,
+              displayName: fullName,
               email,
-              photoURL: downloadURL,
+              photoURL: download,
               friends: {},
             });
-          });
-        }
-      );
+          }
+        );
+      } else {
+        await setDoc(doc(db, "users", res.user.uid), {
+          uid: res.user.uid,
+          displayName: fullName,
+          email,
+          photoURL: null,
+          friends: {},
+        });
+      }
 
       console.log(res);
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+      console.log(error);
     }
 
     e.target.reset();
+    navigate("/");
   }
 
   return (

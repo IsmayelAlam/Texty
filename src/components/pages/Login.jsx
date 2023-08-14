@@ -1,9 +1,8 @@
 import { FaFacebookSquare, FaGoogle, FaTwitter } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-import { auth, db, storage } from "../API/firebase";
+import { auth } from "../API/firebase";
 import Logo from "../utils/Logo";
 
 export default function Login() {
@@ -11,22 +10,19 @@ export default function Login() {
 
   async function handleLogin(e) {
     e.preventDefault();
-    console.log(e);
 
     const email = e.target[0].value;
     const password = e.target[1].value;
 
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
-      console.log(res);
       navigate("/");
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+      console.log(error);
     }
-
     e.target.reset();
   }
+
   return (
     <div className="authPage">
       <div className="authBox">
