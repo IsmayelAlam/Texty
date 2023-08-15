@@ -1,6 +1,6 @@
 import avatar from "../assets/avatar.png";
 
-export default function Messages({ friends }) {
+export default function Messages({ friends, id }) {
   return (
     <div className={`friend `}>
       <img
@@ -15,7 +15,7 @@ export default function Messages({ friends }) {
         )}
       </div>
 
-      {/* {name === "jhon" && <p className="new">new</p>} */}
+      {friends.unread && <p className="new">new</p>}
     </div>
   );
 }
