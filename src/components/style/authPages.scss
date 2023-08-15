@@ -24,6 +24,7 @@
       display: block;
       margin: 0 auto;
       max-width: 20rem;
+      cursor: pointer;
     }
 
     & .authLink {
@@ -133,6 +134,7 @@
   & .textLink {
     font-size: 1.35rem;
     color: $gray0;
+
     &:not(:last-child) {
       margin-bottom: 1rem;
     }
@@ -142,7 +144,9 @@
       text-decoration: none;
 
       &:active,
-      &:visited {
+      &:visited,
+      &:focus,
+      &:target {
         color: $color04;
       }
     }

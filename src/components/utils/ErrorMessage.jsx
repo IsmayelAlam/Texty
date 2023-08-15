@@ -11,7 +11,7 @@ export default function ErrorMessage({ error }) {
     <div className="error">
       <BiError />
       <p>{message}</p>
-      <button onClick={() => navigate(-1)}>
+      <button onClick={() => navigate("/")}>
         <BiArrowBack />
       </button>
     </div>

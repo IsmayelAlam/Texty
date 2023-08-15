@@ -62,9 +62,9 @@ export default function Login() {
       <p className="textLink">
         Forget password? <a href="#">Recover</a>
       </p>
-      <Link to="/signup">
-        <p className="textLink">Create a new account &rarr;</p>
-      </Link>
+      <p className="textLink">
+        <Link to="/signup">Create a new account &rarr;</Link>
+      </p>
     </>
   );
 

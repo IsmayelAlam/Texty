@@ -1,4 +1,4 @@
-export function imageCompress(file) {
+export default function imageCompress(file, maxWidth) {
   if (!file) return;
 
   const reader = new FileReader();
@@ -13,10 +13,9 @@ export function imageCompress(file) {
 
       imgElement.onload = function (e) {
         const canvas = document.createElement("canvas");
-        const MAX_WIDTH = 400;
 
-        const scaleSize = MAX_WIDTH / e.target.width;
-        canvas.width = MAX_WIDTH;
+        const scaleSize = maxWidth / e.target.width;
+        canvas.width = maxWidth;
         canvas.height = e.target.height * scaleSize;
 
         const ctx = canvas.getContext("2d");

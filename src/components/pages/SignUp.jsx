@@ -3,14 +3,14 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { FaFacebookSquare, FaGoogle, FaTwitter } from "react-icons/fa";
 import { ImImages } from "react-icons/im";
-import { auth, db, storage } from "../API/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { useReducer } from "react";
 
 import Spinner from "../utils/Spinner";
 import ErrorMessage from "../utils/ErrorMessage";
 import Logo from "../utils/Logo";
-import { imageCompress } from "../../helpers/imageCompress";
+import imageCompress from "../../helpers/imageCompress";
+import { auth, db, storage } from "../API/firebase";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -47,32 +47,32 @@ export default function SignUp() {
 
   async function handleImage(e) {
     const image = e.target.files["0"];
+    if (!image) return;
+
     dispatch({ type: "isUploading", uploading: true });
 
-    const compressImg = await imageCompress(image);
+    const compressImg = await imageCompress(image, 400);
 
-    if (image) {
-      const storageRef = ref(storage, `${state.fullName}${Date.now()}`);
+    const storageRef = ref(storage, `${state.fullName}${Date.now()}`);
 
-      const uploadTask = uploadBytesResumable(storageRef, compressImg);
+    const uploadTask = uploadBytesResumable(storageRef, compressImg);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          dispatch({ type: "isProgress", progress });
-        },
-        (error) => {
-          dispatch({ type: "isError", error });
-        },
-        async () => {
-          const download = await getDownloadURL(uploadTask.snapshot.ref);
-          dispatch({ type: "imageLink", image: download });
-          dispatch({ type: "isUploading", uploading: false });
-        }
-      );
-    }
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        dispatch({ type: "isProgress", progress });
+      },
+      (error) => {
+        dispatch({ type: "isError", error });
+      },
+      async () => {
+        const download = await getDownloadURL(uploadTask.snapshot.ref);
+        dispatch({ type: "imageLink", image: download });
+        dispatch({ type: "isUploading", uploading: false });
+      }
+    );
   }
 
   async function handleSingUp(e) {
@@ -102,7 +102,7 @@ export default function SignUp() {
         displayName: fullName,
         email,
         photoURL: image,
-        friends: {},
+        friends: [],
       });
 
       dispatch({ type: "isLoading", loading: false });
