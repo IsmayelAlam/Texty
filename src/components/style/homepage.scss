@@ -7,6 +7,11 @@
   color: $gray0;
   display: flex;
 
+  @include laptop {
+    box-shadow: none;
+    width: 100%;
+  }
+
   & .sidebar {
     background-color: $gray2;
     width: 25%;
@@ -81,9 +86,10 @@
         cursor: pointer;
 
         & .friendImg {
-          max-height: 5rem;
-          max-width: 5rem;
+          height: 5rem;
+          width: 5rem;
           border-radius: 20rem;
+          object-fit: cover;
         }
         & .friendName {
           max-width: 60%;
@@ -118,13 +124,14 @@
     & .user {
       height: 7rem;
       width: 90%;
-      padding: 1rem 0.5rem;
+      padding: 1rem 2rem;
       margin-bottom: 1rem;
       border: $md_border;
       border-radius: 1rem;
       overflow: hidden;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 1rem;
       font-size: 1.7rem;
 
@@ -136,8 +143,7 @@
       }
 
       & .username {
-        max-width: 40%;
-        flex-grow: 1;
+        flex: 1;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

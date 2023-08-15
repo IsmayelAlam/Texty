@@ -1,10 +1,10 @@
-import { FaFacebookSquare, FaGoogle, FaTwitter } from "react-icons/fa";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { FaFacebookSquare, FaGoogle, FaTwitter } from "react-icons/fa";
 
 import { auth } from "../API/firebase";
 import Logo from "../utils/Logo";
-import { useState } from "react";
 import Spinner from "../utils/Spinner";
 import ErrorMessage from "../utils/ErrorMessage";
 

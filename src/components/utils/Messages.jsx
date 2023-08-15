@@ -1,17 +1,21 @@
-export default function Messages({ name }) {
+import avatar from "../assets/avatar.png";
+
+export default function Messages({ friends }) {
   return (
-    <div className={`friend  ${name === "jessy" && "active"}`}>
+    <div className={`friend `}>
       <img
-        src={`https://picsum.photos/id/${Math.ceil(Math.random() * 1000)}/200`}
-        alt=""
+        src={friends?.photoURL || avatar}
+        alt={`photo of ${friends?.displayName}`}
         className="friendImg"
       />
       <div className="friendName">
-        <h3>{name}</h3>
-        <p className="lastMessage">hello</p>
+        <h3>{friends?.displayName}</h3>
+        {friends?.lastMessage && (
+          <p className="lastMessage">{friends?.lastMessage}</p>
+        )}
       </div>
 
-      {name === "jhon" && <p className="new">new</p>}
+      {/* {name === "jhon" && <p className="new">new</p>} */}
     </div>
   );
 }

@@ -104,6 +104,7 @@ export default function SignUp() {
         photoURL: image,
         friends: [],
       });
+      await setDoc(doc(db, "userChats", res.user.uid), {});
 
       dispatch({ type: "isLoading", loading: false });
     } catch (error) {
