@@ -8,6 +8,8 @@ import { AuthContext } from "../context/AuthContext";
 
 export default function MessageList() {
   const [userChats, setUserChats] = useState([]);
+  const selected = useState(null);
+
   const { results } = useContext(SearchContext);
   const { currentUser } = useContext(AuthContext);
 
@@ -18,14 +20,14 @@ export default function MessageList() {
 
       if (docSnap.exists()) setUserChats(Object.entries(docSnap.data()));
     };
-    unsub();
+    return unsub;
   }, [currentUser.uid]);
 
   return (
     <div className="messageList">
-      {results?.id && <Messages friends={results.data} />}
-      {userChats.map((data) => (
-        <Messages friends={data[1]} key={data[0]} id={data[0]} />
+      {results?.id && <Messages friends={results.data} id={results.id} />}
+      {userChats.map(([id, data]) => (
+        <Messages friends={data} key={id} id={id} selected={selected} />
       ))}
     </div>
   );
