@@ -84,7 +84,7 @@ export default function SignUp() {
         displayName: fullName,
         email,
         photoURL: image,
-        friends: [],
+        friends: {},
       });
       await setDoc(doc(db, "userChats", res.user.uid), {});
 

@@ -5,7 +5,7 @@ import ChatTexts from "./ChatTexts";
 export default function Chat() {
   return (
     <div className="chat">
-      <ActiveChatUser />
+      {/* <ActiveChatUser /> */}
       <ChatTexts />
       <SendMessage />
     </div>

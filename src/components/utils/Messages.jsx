@@ -4,20 +4,19 @@ import { AuthContext } from "../context/AuthContext";
 import { combineID } from "../../helpers/miscellany";
 import { ChatContext } from "../context/ChatContext";
 
-export default function Messages({ friends, id, selected }) {
+export default function Messages({ friends, id }) {
   const { currentUser } = useContext(AuthContext);
-  const { setChatID } = useContext(ChatContext);
-  const [active, setActive] = selected;
+  const { setChatID, setActiveChat, activeChat } = useContext(ChatContext);
 
   function handleClick() {
-    setActive(id);
+    setActiveChat(id);
     const newId = combineID(currentUser.uid, id);
     setChatID(newId);
   }
 
   return (
     <div
-      className={`friend ${active === id && "active"}`}
+      className={`friend ${activeChat === id && "active"}`}
       onClick={handleClick}
     >
       <img

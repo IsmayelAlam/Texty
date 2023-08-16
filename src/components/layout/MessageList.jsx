@@ -8,7 +8,6 @@ import { AuthContext } from "../context/AuthContext";
 
 export default function MessageList() {
   const [userChats, setUserChats] = useState([]);
-  const selected = useState(null);
 
   const { results } = useContext(SearchContext);
   const { currentUser } = useContext(AuthContext);
@@ -29,7 +28,7 @@ export default function MessageList() {
       {userChats
         .sort((a, b) => b[1].timeStamp.seconds - a[1].timeStamp.seconds)
         .map(([id, data]) => (
-          <Messages friends={data} key={id} id={id} selected={selected} />
+          <Messages friends={data} key={id} id={id} />
         ))}
     </div>
   );
