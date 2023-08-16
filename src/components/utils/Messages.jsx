@@ -4,19 +4,26 @@ import { AuthContext } from "../context/AuthContext";
 import { combineID } from "../../helpers/miscellany";
 import { ChatContext } from "../context/ChatContext";
 import { SearchContext } from "../context/SearchContext";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../API/firebase";
 
-export default function Messages({ friends, id }) {
+export default function Messages({ friends, id, search }) {
   const { currentUser } = useContext(AuthContext);
   const { setChatID, setActiveChat, activeChat } = useContext(ChatContext);
   const { setResults } = useContext(SearchContext);
 
-  function handleClick() {
+  async function handleClick() {
     setActiveChat(id);
-    const newId = combineID(currentUser.uid, id);
-    setChatID(newId);
+    setChatID(combineID(currentUser.uid, id));
+
     setResults((result) => {
       return { ...result, id: null };
     });
+    if (!search) {
+      await updateDoc(doc(db, "userChats", currentUser.uid), {
+        [id + ".unread"]: false,
+      });
+    }
   }
 
   return (

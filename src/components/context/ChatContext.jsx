@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../API/firebase";
 import { AuthContext } from "./AuthContext";
 import { SearchContext } from "./SearchContext";
@@ -21,26 +21,24 @@ export function ChatProvider({ children }) {
 
     const unSub = async () => {
       const docRef = doc(db, "chats", chatID);
-      const docSnap = await getDoc(docRef);
-      console.log(docSnap.exists());
-
-      if (docSnap.exists()) {
-        setChatMessages(docSnap.data());
-      } else {
-        await setDoc(docRef, {
-          [userData.uid]: {
-            displayName: userData.displayName,
-            photoURL: userData.photoURL,
-            status: "notFriend",
-          },
-          [activeChat]: {
-            displayName: results.data.displayName,
-            photoURL: results.data.photoURL,
-            status: "notFriend",
-          },
-          messages: {},
-        });
-      }
+      return onSnapshot(docRef, async (doc) => {
+        if (!doc.exists()) {
+          await setDoc(docRef, {
+            [userData.uid]: {
+              displayName: userData.displayName,
+              photoURL: userData.photoURL,
+              status: "add friend",
+            },
+            [activeChat]: {
+              displayName: results.data.displayName,
+              photoURL: results.data.photoURL,
+              status: "add friend",
+            },
+            messages: {},
+          });
+        }
+        setChatMessages(doc.data());
+      });
     };
 
     unSub();

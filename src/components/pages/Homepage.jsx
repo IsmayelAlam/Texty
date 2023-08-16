@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import Chat from "../layout/Chat";
+
 import Sidebar from "../layout/Sidebar";
 import { AuthContext } from "../context/AuthContext";
+import ChatTexts from "../layout/ChatTexts";
 
 export default function Homepage() {
   const { currentUser } = useContext(AuthContext);
@@ -10,7 +11,7 @@ export default function Homepage() {
   return (
     <div className="homepage">
       <Sidebar />
-      <Chat />
+      <ChatTexts />
     </div>
   );
 }
