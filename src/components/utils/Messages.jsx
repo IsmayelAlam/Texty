@@ -2,15 +2,17 @@ import { useContext } from "react";
 import avatar from "../assets/avatar.png";
 import { AuthContext } from "../context/AuthContext";
 import { combineID } from "../../helpers/miscellany";
+import { ChatContext } from "../context/ChatContext";
 
 export default function Messages({ friends, id, selected }) {
   const { currentUser } = useContext(AuthContext);
+  const { setChatID } = useContext(ChatContext);
   const [active, setActive] = selected;
 
   function handleClick() {
     setActive(id);
     const newId = combineID(currentUser.uid, id);
-    console.log(newId);
+    setChatID(newId);
   }
 
   return (

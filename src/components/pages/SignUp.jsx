@@ -33,7 +33,7 @@ export default function SignUp() {
 
     dispatch({ type: "isUploading", uploading: true });
 
-    const compressImg = await imageCompress(image, 400);
+    const compressImg = await imageCompress(image, 200);
 
     const storageRef = ref(storage, `${state.fullName}${Date.now()}`);
 
