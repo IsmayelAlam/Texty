@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import avatar from "../assets/avatar.png";
 import { AuthContext } from "../context/AuthContext";
+import { combineID } from "../../helpers/miscellany";
 
 export default function Messages({ friends, id, selected }) {
   const { currentUser } = useContext(AuthContext);
@@ -8,8 +9,7 @@ export default function Messages({ friends, id, selected }) {
 
   function handleClick() {
     setActive(id);
-    const newId =
-      id < currentUser.uid ? id + currentUser.uid : currentUser.uid + id;
+    const newId = combineID(currentUser.uid, id);
     console.log(newId);
   }
 

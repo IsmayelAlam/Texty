@@ -26,9 +26,11 @@ export default function MessageList() {
   return (
     <div className="messageList">
       {results?.id && <Messages friends={results.data} id={results.id} />}
-      {userChats.map(([id, data]) => (
-        <Messages friends={data} key={id} id={id} selected={selected} />
-      ))}
+      {userChats
+        .sort((a, b) => b[1].timeStamp.seconds - a[1].timeStamp.seconds)
+        .map(([id, data]) => (
+          <Messages friends={data} key={id} id={id} selected={selected} />
+        ))}
     </div>
   );
 }

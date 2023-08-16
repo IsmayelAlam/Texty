@@ -33,10 +33,12 @@
       padding: 0.5rem;
       display: flex;
       align-items: center;
+      justify-content: space-between;
 
       & input {
         font-size: 1.8rem;
         color: $gray0;
+        min-width: 10rem;
         flex: 1;
       }
       & svg {
@@ -44,6 +46,7 @@
         width: 2rem;
         height: 2rem;
         cursor: pointer;
+        flex-shrink: 0;
       }
 
       &::placeholder {
@@ -124,7 +127,7 @@
     & .user {
       height: 7rem;
       width: 90%;
-      padding: 1rem 2rem;
+      padding: 1rem;
       margin-bottom: 1rem;
       border: $md_border;
       border-radius: 1rem;
