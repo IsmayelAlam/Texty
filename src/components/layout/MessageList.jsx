@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { SearchContext } from "../context/SearchContext";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 
 import Messages from "../utils/Messages";
 import { db } from "../API/firebase";
@@ -15,9 +15,11 @@ export default function MessageList() {
   useEffect(() => {
     const unsub = async () => {
       const docRef = doc(db, "userChats", currentUser.uid);
-      const docSnap = await getDoc(docRef);
+      return onSnapshot(docRef, (doc) => {
+        setUserChats(Object.entries(doc.data()));
+      });
 
-      if (docSnap.exists()) setUserChats(Object.entries(docSnap.data()));
+      // if (docSnap.exists()) setUserChats(Object.entries(docSnap.data()));
     };
     return unsub;
   }, [currentUser.uid]);

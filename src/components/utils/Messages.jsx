@@ -3,15 +3,20 @@ import avatar from "../assets/avatar.png";
 import { AuthContext } from "../context/AuthContext";
 import { combineID } from "../../helpers/miscellany";
 import { ChatContext } from "../context/ChatContext";
+import { SearchContext } from "../context/SearchContext";
 
 export default function Messages({ friends, id }) {
   const { currentUser } = useContext(AuthContext);
   const { setChatID, setActiveChat, activeChat } = useContext(ChatContext);
+  const { setResults } = useContext(SearchContext);
 
   function handleClick() {
     setActiveChat(id);
     const newId = combineID(currentUser.uid, id);
     setChatID(newId);
+    setResults((result) => {
+      return { ...result, id: null };
+    });
   }
 
   return (

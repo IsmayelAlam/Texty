@@ -22,7 +22,7 @@ export function SearchProvider({ children }) {
   };
 
   return (
-    <SearchContext.Provider value={{ results, setQuery }}>
+    <SearchContext.Provider value={{ results, setQuery, setResults }}>
       {children}
     </SearchContext.Provider>
   );
