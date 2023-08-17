@@ -7,13 +7,15 @@ export default function Text({ massage }) {
   const { chatMessages } = useContext(ChatContext);
 
   const user =
-    currentUser.uid === massage.id ? currentUser : chatMessages[massage.id];
+    currentUser.uid === massage.senderId
+      ? currentUser
+      : chatMessages[massage.senderId];
 
   return (
     <>
       <div
         className={`chatMessage ${
-          currentUser.uid === massage.id && "activeUser"
+          currentUser.uid === massage.senderId && "activeUser"
         }`}
       >
         <div>

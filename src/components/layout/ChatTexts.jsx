@@ -24,7 +24,7 @@ export default function ChatTexts() {
   const uid = userData?.uid;
   const combine = combineID(uid, activeChat);
 
-  console.log(chatMessages);
+  // console.log(chatMessages);
 
   const handleFriend = async (state) => {
     const curUserRef = doc(db, "userChats", uid);
