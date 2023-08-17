@@ -1,7 +1,6 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { FaFacebookSquare, FaGoogle, FaTwitter } from "react-icons/fa";
 import { ImImages } from "react-icons/im";
 import { Link, useNavigate } from "react-router-dom";
 import { useReducer } from "react";
@@ -99,19 +98,6 @@ export default function SignUp() {
 
   let content = (
     <>
-      <div className="authLink">
-        <p>Sign up with</p>
-        <div className="links">
-          <FaGoogle />
-          <FaFacebookSquare />
-          <FaTwitter />
-        </div>
-      </div>
-      <div className="divider">
-        <hr />
-        <p>or</p>
-        <hr />
-      </div>
       <form className="authFrom" onSubmit={handleSingUp}>
         <input
           type="text"

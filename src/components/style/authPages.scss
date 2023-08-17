@@ -22,41 +22,9 @@
 
     & .logo {
       display: block;
-      margin: 0 auto;
+      margin: 0 auto 2rem;
       max-width: 20rem;
       cursor: pointer;
-    }
-
-    & .authLink {
-      text-align: center;
-      font-size: 1.8rem;
-      color: $gray0;
-
-      & .links {
-        display: flex;
-        justify-content: space-evenly;
-        margin: 2rem 0 1rem;
-
-        & svg {
-          cursor: pointer;
-          height: 2.4rem;
-          width: 2.4rem;
-          color: $color04;
-        }
-      }
-    }
-
-    & .divider {
-      display: flex;
-      margin: 1.5rem 0;
-      & p {
-        margin: 0 1rem;
-        font-size: 1.8rem;
-        color: $gray0;
-      }
-      & hr {
-        width: 100%;
-      }
     }
 
     & .authFrom {

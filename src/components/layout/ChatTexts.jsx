@@ -13,10 +13,11 @@ export default function ChatTexts() {
   const { chatMessages, activeChat } = useContext(ChatContext);
   const { userData } = useContext(AuthContext);
   const { results } = useContext(SearchContext);
-  console.log(chatMessages);
 
   const uid = userData?.uid;
   const combine = combineID(uid, activeChat);
+
+  console.log(chatMessages);
 
   const handleFriend = async () => {
     switch (chatMessages[uid]?.status) {
@@ -80,7 +81,7 @@ export default function ChatTexts() {
     chatMessages?.[activeChat]?.status === "add friend" ||
     chatMessages?.[activeChat]?.status === "pending" ||
     chatMessages?.[activeChat]?.status === "accept"
-  )
+  ) {
     content = (
       <div className="addFriend">
         <img src={chatMessages[activeChat]?.photoURL} alt="" />
@@ -91,17 +92,18 @@ export default function ChatTexts() {
         </div>
       </div>
     );
-
+  }
   if (
-    chatMessages[uid]?.status === "block" ||
-    chatMessages[activeChat]?.status === "block"
-  )
+    chatMessages?.[uid]?.status === "block" ||
+    chatMessages?.[activeChat]?.status === "block"
+  ) {
     content = (
       <div className="addFriend">
         <h2>{chatMessages[activeChat].displayName}</h2>
         <p>Can&rsquo;t be reach</p>
       </div>
     );
+  }
 
   return (
     <div className="chat">

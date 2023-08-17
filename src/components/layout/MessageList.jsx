@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { SearchContext } from "../context/SearchContext";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 
 import Messages from "../utils/Messages";
 import { db } from "../API/firebase";
@@ -8,7 +8,6 @@ import { AuthContext } from "../context/AuthContext";
 
 export default function MessageList() {
   const [userChats, setUserChats] = useState([]);
-  console.log(userChats);
 
   const { results } = useContext(SearchContext);
   const { currentUser } = useContext(AuthContext);
@@ -17,11 +16,12 @@ export default function MessageList() {
     const unSub = async () => {
       const docRef = doc(db, "userChats", currentUser.uid);
       return onSnapshot(docRef, (doc) => {
+        if (!doc.exists()) return;
         setUserChats(Object.entries(doc.data()));
       });
     };
     return unSub;
-  }, [currentUser.uid]);
+  }, [currentUser]);
 
   return (
     <div className="messageList">

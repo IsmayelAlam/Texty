@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { FaFacebookSquare, FaGoogle, FaTwitter } from "react-icons/fa";
 
 import { auth } from "../API/firebase";
 import Logo from "../utils/Logo";
@@ -33,19 +32,6 @@ export default function Login() {
 
   let content = (
     <>
-      <div className="authLink">
-        <p>Login with</p>
-        <div className="links">
-          <FaGoogle />
-          <FaFacebookSquare />
-          <FaTwitter />
-        </div>
-      </div>
-      <div className="divider">
-        <hr />
-        <p>or</p>
-        <hr />
-      </div>
       <form className="authFrom" onSubmit={handleLogin}>
         <input type="email" id="email" placeholder="Email" required />
 

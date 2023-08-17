@@ -36,17 +36,24 @@ export function ChatProvider({ children }) {
             },
             messages: {},
           });
+        } else {
+          setChatMessages(doc.data());
         }
-        setChatMessages(doc.data());
       });
     };
 
     unSub();
-  }, [chatID, activeChat, results, userData]);
+  }, [chatID, activeChat, results.data, userData]);
 
   return (
     <ChatContext.Provider
-      value={{ setChatID, chatMessages, setActiveChat, activeChat }}
+      value={{
+        setChatID,
+        chatMessages,
+        setChatMessages,
+        setActiveChat,
+        activeChat,
+      }}
     >
       {children}
     </ChatContext.Provider>
