@@ -6,7 +6,6 @@ export default function ErrorMessage({ error }) {
   const message = error.message.includes("email-already-in-use")
     ? "Email is already registered, please try a different one"
     : "something went wrong, please try again";
-  console.log(message);
   return (
     <div className="error">
       <BiError />

@@ -2,13 +2,7 @@ import { useContext } from "react";
 import { ChatContext } from "../context/ChatContext";
 import { AuthContext } from "../context/AuthContext";
 import { SearchContext } from "../context/SearchContext";
-import {
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../API/firebase";
 import { combineID } from "../../helpers/miscellany";
 import ActiveChatUser from "../utils/ActiveChatUser";
@@ -25,62 +19,34 @@ export default function ChatTexts() {
   const combine = combineID(uid, activeChat);
   let perText = {};
 
-  // console.log(chatMessages);
-
   const handleFriend = async (state) => {
     const curUserRef = doc(db, "userChats", uid);
     const activeUserRef = doc(db, "userChats", activeChat);
-    const curUserDoc = await getDoc(curUserRef);
-    const activeUseDoc = await getDoc(activeUserRef);
 
     switch (state) {
       case "add friend":
+        await updateDoc(curUserRef, {
+          [activeChat]: {
+            lastMessage: "friend request sent",
+            displayName: results.data.displayName,
+            photoURL: results.data.photoURL,
+            timeStamp: serverTimestamp(),
+            unread: false,
+          },
+        });
+        await updateDoc(activeUserRef, {
+          [uid]: {
+            lastMessage: "",
+            displayName: userData.displayName,
+            photoURL: userData.photoURL,
+            timeStamp: serverTimestamp(),
+            unread: true,
+          },
+        });
         await updateDoc(doc(db, "chats", combine), {
           [uid + ".status"]: "pending",
           [activeChat + ".status"]: "accept",
         });
-        if (!curUserDoc.exists()) {
-          await setDoc(curUserRef, {
-            [activeChat]: {
-              lastMessage: "friend request sent",
-              displayName: results.data.displayName,
-              photoURL: results.data.photoURL,
-              timeStamp: serverTimestamp(),
-              unread: false,
-            },
-          });
-        } else {
-          await updateDoc(curUserRef, {
-            [activeChat]: {
-              lastMessage: "friend request sent",
-              displayName: results.data.displayName,
-              photoURL: results.data.photoURL,
-              timeStamp: serverTimestamp(),
-              unread: false,
-            },
-          });
-        }
-        if (!activeUseDoc.exists()) {
-          await setDoc(activeUserRef, {
-            [uid]: {
-              lastMessage: "send a friend request",
-              displayName: userData.displayName,
-              photoURL: userData.photoURL,
-              timeStamp: serverTimestamp(),
-              unread: true,
-            },
-          });
-        } else {
-          await updateDoc(activeUserRef, {
-            [uid]: {
-              lastMessage: "send a friend request",
-              displayName: userData.displayName,
-              photoURL: userData.photoURL,
-              timeStamp: serverTimestamp(),
-              unread: true,
-            },
-          });
-        }
         return;
       case "accept":
         await updateDoc(curUserRef, {
@@ -171,10 +137,8 @@ export default function ChatTexts() {
 
   return (
     <div className="chat">
-      <div className="chatText">
-        {chatMessages?.[activeChat]?.status === "friends" && <ActiveChatUser />}
-        {content}
-      </div>
+      {chatMessages?.[activeChat]?.status === "friends" && <ActiveChatUser />}
+      <div className="chatText">{content}</div>
       {chatMessages?.[activeChat]?.status === "friends" && <SendMessage />}
     </div>
   );

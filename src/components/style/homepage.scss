@@ -183,36 +183,39 @@
       overflow: hidden;
     }
 
+    & .activeChat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 5rem;
+      padding: 1rem 2rem;
+      text-transform: capitalize;
+      background: $color05;
+
+      &User {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      & .activeChatImg {
+        margin-left: 1rem;
+        height: 3.5rem;
+        width: 3.5rem;
+        border-radius: 50rem;
+        display: inline;
+        object-fit: cover;
+      }
+    }
+
     & .chatText {
       flex: 1;
       overflow-x: hidden;
       overflow-y: scroll;
       padding: 1rem;
+      width: 100%;
+      position: relative;
 
-      & .activeChat {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 5rem;
-        padding: 1rem 2rem;
-        text-transform: capitalize;
-        background: $color05;
-
-        &User {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-        }
-
-        & .activeChatImg {
-          margin-left: 1rem;
-          height: 3.5rem;
-          width: 3.5rem;
-          border-radius: 50rem;
-          display: inline;
-          object-fit: cover;
-        }
-      }
       &::-webkit-scrollbar {
         appearance: none;
         display: none;

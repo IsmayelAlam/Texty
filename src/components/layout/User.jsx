@@ -7,7 +7,6 @@ import avatar from "../assets/avatar.png";
 
 export default function User() {
   const { currentUser } = useContext(AuthContext);
-  // console.log(currentUser);
 
   return (
     <div className="user">

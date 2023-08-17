@@ -66,10 +66,10 @@ export default function SendMessage() {
         }),
       });
       await updateDoc(doc(db, "userChats", currentUser.uid), {
-        [activeChat + ".lastMessage"]: text,
+        [activeChat + ".lastMessage"]: "sent an image",
       });
       await updateDoc(doc(db, "userChats", activeChat), {
-        [currentUser.uid + ".lastMessage"]: text,
+        [currentUser.uid + ".lastMessage"]: "sent an image",
         [currentUser.uid + ".unread"]: true,
       });
     } else {

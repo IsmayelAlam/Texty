@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../API/firebase";
 import { AuthContext } from "./AuthContext";
 import { SearchContext } from "./SearchContext";
@@ -41,6 +41,26 @@ export function ChatProvider({ children }) {
 
     unSub();
   }, [chatID, activeChat, results.data, userData]);
+
+  useEffect(() => {
+    if (!activeChat) return;
+
+    const unSub = async () => {
+      const curUserRef = doc(db, "userChats", userData.uid);
+      const activeUserRef = doc(db, "userChats", activeChat);
+      const curUserDoc = await getDoc(curUserRef);
+      const activeUseDoc = await getDoc(activeUserRef);
+
+      if (!curUserDoc.exists()) {
+        await setDoc(curUserRef, {});
+      }
+      if (!activeUseDoc.exists()) {
+        await setDoc(activeUserRef, {});
+      }
+    };
+
+    unSub();
+  }, [activeChat, userData]);
 
   return (
     <ChatContext.Provider
