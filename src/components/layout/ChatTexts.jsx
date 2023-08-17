@@ -23,6 +23,7 @@ export default function ChatTexts() {
 
   const uid = userData?.uid;
   const combine = combineID(uid, activeChat);
+  let perText = {};
 
   // console.log(chatMessages);
 
@@ -125,9 +126,10 @@ export default function ChatTexts() {
     }
   };
 
-  let content = chatMessages?.messages?.map((massage) => (
-    <Text key={massage.id} massage={massage} />
-  ));
+  let content = chatMessages?.messages?.map((massage, index) => {
+    perText = index > 0 ? chatMessages.messages[index - 1] : null;
+    return <Text key={massage.id} massage={massage} perText={perText} />;
+  });
 
   if (
     chatMessages?.[uid]?.status === "add friend" ||

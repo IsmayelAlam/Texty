@@ -226,11 +226,15 @@
         color: $gray2;
         margin: 1rem 0;
 
-        & .chatUserImg {
+        & .imageBox {
           height: 4rem;
           width: 4rem;
-          border-radius: 10rem;
-          object-fit: cover;
+          & .chatUserImg {
+            height: 4rem;
+            width: 4rem;
+            border-radius: 10rem;
+            object-fit: cover;
+          }
         }
 
         & .chatPayload {
@@ -249,7 +253,7 @@
             color: $gray0;
           }
           & .chatTextImg {
-            width: 30%;
+            max-width: 50rem;
             margin: 1rem 0;
             border: $sm_border;
             border-radius: 0.5rem;

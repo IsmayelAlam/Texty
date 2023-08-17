@@ -10,16 +10,7 @@ import ErrorMessage from "../utils/ErrorMessage";
 import Logo from "../utils/Logo";
 import imageCompress from "../../helpers/imageCompress";
 import { auth, db, storage } from "../API/firebase";
-import { reducer } from "../../helpers/miscellany";
-
-const initState = {
-  loading: false,
-  fullName: "",
-  uploading: false,
-  progress: 0,
-  error: null,
-  image: null,
-};
+import { initState, reducer } from "../../helpers/miscellany";
 
 export default function SignUp() {
   const [state, dispatch] = useReducer(reducer, initState);

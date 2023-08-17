@@ -20,3 +20,12 @@ export function reducer(state, action) {
       throw Error("Unknown action.");
   }
 }
+
+export const initState = {
+  loading: false,
+  fullName: "",
+  uploading: false,
+  progress: 0,
+  error: null,
+  image: null,
+};
