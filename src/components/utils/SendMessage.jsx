@@ -1,5 +1,5 @@
 import { AiOutlineSend } from "react-icons/ai";
-import { ImAttachment, ImImages } from "react-icons/im";
+import { ImImages } from "react-icons/im";
 
 export default function SendMessage() {
   return (

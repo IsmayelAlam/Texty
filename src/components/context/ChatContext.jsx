@@ -13,9 +13,6 @@ export function ChatProvider({ children }) {
   const { userData } = useContext(AuthContext);
   const { results } = useContext(SearchContext);
 
-  // console.log(userData?.friends[activeChat]);
-  // console.log(activeChat);
-
   useEffect(() => {
     if (!chatID) return;
 
@@ -34,7 +31,7 @@ export function ChatProvider({ children }) {
               photoURL: results.data.photoURL,
               status: "add friend",
             },
-            messages: {},
+            messages: [],
           });
         } else {
           setChatMessages(doc.data());

@@ -29,7 +29,7 @@ export default function MessageList() {
         <Messages friends={results.data} id={results.id} search={true} />
       )}
       {userChats
-        .sort((a, b) => b[1].timeStamp.seconds - a[1].timeStamp.seconds)
+        .sort((a, b) => b[1]?.timeStamp?.seconds - a[1]?.timeStamp?.seconds)
         .map(([id, data]) => (
           <Messages friends={data} key={id} id={id} />
         ))}

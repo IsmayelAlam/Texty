@@ -2,12 +2,19 @@ import { useContext } from "react";
 import { ChatContext } from "../context/ChatContext";
 import { AuthContext } from "../context/AuthContext";
 import { SearchContext } from "../context/SearchContext";
-import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../API/firebase";
 import { combineID } from "../../helpers/miscellany";
 import ActiveChatUser from "../utils/ActiveChatUser";
 import SendMessage from "../utils/SendMessage";
 import Text from "../utils/Text";
+import avatar from "../assets/avatar.png";
 
 export default function ChatTexts() {
   const { chatMessages, activeChat } = useContext(ChatContext);
@@ -19,38 +26,67 @@ export default function ChatTexts() {
 
   console.log(chatMessages);
 
-  const handleFriend = async () => {
-    switch (chatMessages[uid]?.status) {
+  const handleFriend = async (state) => {
+    const curUserRef = doc(db, "userChats", uid);
+    const activeUserRef = doc(db, "userChats", activeChat);
+    const curUserDoc = await getDoc(curUserRef);
+    const activeUseDoc = await getDoc(activeUserRef);
+
+    switch (state) {
       case "add friend":
-        await setDoc(doc(db, "userChats", uid), {
-          [activeChat]: {
-            lastMessage: "friend request sent",
-            displayName: results.data.displayName,
-            photoURL: results.data.photoURL,
-            timeStamp: serverTimestamp(),
-            unread: false,
-          },
-        });
-        await setDoc(doc(db, "userChats", activeChat), {
-          [uid]: {
-            lastMessage: "send a friend request",
-            displayName: userData.displayName,
-            photoURL: userData.photoURL,
-            timeStamp: serverTimestamp(),
-            unread: true,
-          },
-        });
         await updateDoc(doc(db, "chats", combine), {
           [uid + ".status"]: "pending",
           [activeChat + ".status"]: "accept",
         });
+        if (!curUserDoc.exists()) {
+          await setDoc(curUserRef, {
+            [activeChat]: {
+              lastMessage: "friend request sent",
+              displayName: results.data.displayName,
+              photoURL: results.data.photoURL,
+              timeStamp: serverTimestamp(),
+              unread: false,
+            },
+          });
+        } else {
+          await updateDoc(curUserRef, {
+            [activeChat]: {
+              lastMessage: "friend request sent",
+              displayName: results.data.displayName,
+              photoURL: results.data.photoURL,
+              timeStamp: serverTimestamp(),
+              unread: false,
+            },
+          });
+        }
+        if (!activeUseDoc.exists()) {
+          await setDoc(activeUserRef, {
+            [uid]: {
+              lastMessage: "send a friend request",
+              displayName: userData.displayName,
+              photoURL: userData.photoURL,
+              timeStamp: serverTimestamp(),
+              unread: true,
+            },
+          });
+        } else {
+          await updateDoc(activeUserRef, {
+            [uid]: {
+              lastMessage: "send a friend request",
+              displayName: userData.displayName,
+              photoURL: userData.photoURL,
+              timeStamp: serverTimestamp(),
+              unread: true,
+            },
+          });
+        }
         return;
       case "accept":
-        await updateDoc(doc(db, "userChats", uid), {
+        await updateDoc(curUserRef, {
           [activeChat + ".lastMessage"]: "friend request accepted",
           [activeChat + ".timeStamp"]: serverTimestamp(),
         });
-        await updateDoc(doc(db, "userChats", activeChat), {
+        await updateDoc(activeUserRef, {
           [uid + ".lastMessage"]: "friend request accepted",
           [uid + ".timeStamp"]: serverTimestamp(),
         });
@@ -60,8 +96,26 @@ export default function ChatTexts() {
         });
         return;
       case "block":
+        await updateDoc(curUserRef, {
+          [activeChat + ".lastMessage"]: "blocked",
+          [activeChat + ".timeStamp"]: serverTimestamp(),
+        });
         await updateDoc(doc(db, "chats", combine), {
           [uid + ".status"]: "block",
+        });
+        return;
+      case "unblock":
+        await updateDoc(curUserRef, {
+          [activeChat + ".lastMessage"]: "Add friend",
+          [activeChat + ".timeStamp"]: serverTimestamp(),
+        });
+        await updateDoc(activeUserRef, {
+          [uid + ".lastMessage"]: "Add friend",
+          [uid + ".timeStamp"]: serverTimestamp(),
+        });
+        await updateDoc(doc(db, "chats", combine), {
+          [activeChat + ".status"]: "add friend",
+          [uid + ".status"]: "add friend",
         });
         return;
       case "pending":
@@ -71,36 +125,44 @@ export default function ChatTexts() {
     }
   };
 
-  let content =
-    chatMessages?.messages?.length &&
-    chatMessages.messages.map((massage) => (
-      <Text key={massage.id} massage={massage} />
-    ));
+  let content = chatMessages?.messages?.map((massage) => (
+    <Text key={massage.id} massage={massage} />
+  ));
 
   if (
-    chatMessages?.[activeChat]?.status === "add friend" ||
-    chatMessages?.[activeChat]?.status === "pending" ||
-    chatMessages?.[activeChat]?.status === "accept"
+    chatMessages?.[uid]?.status === "add friend" ||
+    chatMessages?.[uid]?.status === "pending" ||
+    chatMessages?.[uid]?.status === "accept"
   ) {
     content = (
       <div className="addFriend">
-        <img src={chatMessages[activeChat]?.photoURL} alt="" />
+        <img src={chatMessages[activeChat]?.photoURL || avatar} alt="" />
         <h2>{chatMessages[activeChat]?.displayName}</h2>
         <div>
-          <button onClick={handleFriend}>Block</button>
-          <button onClick={handleFriend}>{chatMessages[uid]?.status}</button>
+          <button onClick={() => handleFriend("block")}>Block</button>
+          <button onClick={() => handleFriend(chatMessages?.[uid]?.status)}>
+            {chatMessages[uid]?.status}
+          </button>
         </div>
       </div>
     );
   }
-  if (
-    chatMessages?.[uid]?.status === "block" ||
-    chatMessages?.[activeChat]?.status === "block"
-  ) {
+  if (chatMessages?.[activeChat]?.status === "block") {
     content = (
       <div className="addFriend">
         <h2>{chatMessages[activeChat].displayName}</h2>
         <p>Can&rsquo;t be reach</p>
+      </div>
+    );
+  }
+  if (chatMessages?.[uid]?.status === "block") {
+    content = (
+      <div className="addFriend">
+        <img src={chatMessages[activeChat]?.photoURL || avatar} alt="" />
+        <h2>{chatMessages[activeChat]?.displayName}</h2>
+        <div>
+          <button onClick={() => handleFriend("unblock")}>Unblock</button>
+        </div>
       </div>
     );
   }
