@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { SearchContext } from "../context/SearchContext";
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../API/firebase";
-import { combineID, screenWidth } from "../../helpers/miscellany";
+import { combineID } from "../../helpers/miscellany";
 import ActiveChatUser from "../utils/ActiveChatUser";
 import SendMessage from "../utils/SendMessage";
 import Text from "../utils/Text";
