@@ -37,3 +37,7 @@ $md_border: 2px solid $color04;
     @content;
   }
 }
+
+.hidden {
+  display: none !important;
+}

@@ -14,7 +14,7 @@ export function ChatProvider({ children }) {
   const { results } = useContext(SearchContext);
 
   useEffect(() => {
-    if (!chatID) return;
+    if (!chatID && !activeChat) return;
 
     const unSub = async () => {
       const docRef = doc(db, "chats", chatID);

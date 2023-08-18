@@ -29,3 +29,5 @@ export const initState = {
   error: null,
   image: null,
 };
+
+export const screenWidth = window.innerWidth;

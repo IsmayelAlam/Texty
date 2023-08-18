@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { SearchContext } from "../context/SearchContext";
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../API/firebase";
-import { combineID } from "../../helpers/miscellany";
+import { combineID, screenWidth } from "../../helpers/miscellany";
 import ActiveChatUser from "../utils/ActiveChatUser";
 import SendMessage from "../utils/SendMessage";
 import Text from "../utils/Text";
@@ -64,8 +64,13 @@ export default function ChatTexts() {
         return;
       case "block":
         await updateDoc(curUserRef, {
-          [activeChat + ".lastMessage"]: "blocked",
-          [activeChat + ".timeStamp"]: serverTimestamp(),
+          [activeChat]: {
+            lastMessage: "blocked",
+            displayName: results.data.displayName,
+            photoURL: results.data.photoURL,
+            timeStamp: serverTimestamp(),
+            unread: false,
+          },
         });
         await updateDoc(doc(db, "chats", combine), {
           [uid + ".status"]: "block",
@@ -76,12 +81,7 @@ export default function ChatTexts() {
           [activeChat + ".lastMessage"]: "Add friend",
           [activeChat + ".timeStamp"]: serverTimestamp(),
         });
-        await updateDoc(activeUserRef, {
-          [uid + ".lastMessage"]: "Add friend",
-          [uid + ".timeStamp"]: serverTimestamp(),
-        });
         await updateDoc(doc(db, "chats", combine), {
-          [activeChat + ".status"]: "add friend",
           [uid + ".status"]: "add friend",
         });
         return;
@@ -136,7 +136,7 @@ export default function ChatTexts() {
   }
 
   return (
-    <div className="chat">
+    <div className={`chat ${activeChat || "hidden"}`}>
       {chatMessages?.[activeChat]?.status === "friends" && <ActiveChatUser />}
       <div className="chatText">{content}</div>
       {chatMessages?.[activeChat]?.status === "friends" && <SendMessage />}

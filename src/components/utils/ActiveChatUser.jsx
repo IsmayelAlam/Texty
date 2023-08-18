@@ -4,14 +4,16 @@ import { ChatContext } from "../context/ChatContext";
 import { BiArrowBack } from "react-icons/bi";
 
 export default function ActiveChatUser() {
-  const { chatMessages, activeChat } = useContext(ChatContext);
+  const { chatMessages, activeChat, setActiveChat } = useContext(ChatContext);
 
   const user = chatMessages[activeChat];
 
   return (
     <div className="activeChat">
       <div className="activeChatUser">
-        <BiArrowBack />
+        <button onClick={() => setActiveChat(null)}>
+          <BiArrowBack />
+        </button>
         <img src={user.photoURL} alt="" className="activeChatImg" />
         <h2>{user.displayName}</h2>
       </div>
